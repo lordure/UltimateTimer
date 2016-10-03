@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Layout d'affichage d'un programme dans une liste -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:orientation="horizontal">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,4 +15,4 @@
         android:id="@+id/tvdescription"
         android:layout_below="@+id/tvname"
         android:layout_marginLeft="30dp"/>
-</RelativeLayout>
+</LinearLayout>

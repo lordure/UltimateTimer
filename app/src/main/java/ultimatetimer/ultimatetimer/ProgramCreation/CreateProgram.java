@@ -31,11 +31,13 @@ import ultimatetimer.ultimatetimer.UltimateTimer;
  * Activité de création d'un program
  * Permet de choisir le nom et la description du nouveau program
  * On peut y ajouter d'autre programmes ou juste un interval.
- *
  */
 public class CreateProgram extends AppCompatActivity {
     static final ArrayList<Timer> mListTraining = new ArrayList<Timer>();
     ListFormAdapter mAdapter;
+
+    public final static String SP_PREFIX = "Program_";
+    public final static String SP_SIZE = "Size";
 
     public static final int DURATION_SELECTION = 666;
     public static final int PROGRAM_SELECTION = 777;
@@ -65,6 +67,8 @@ public class CreateProgram extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_menu_done:
+                //TODO empêcher la création d'un program si le nom est déjà pris
+
                 String wName = ((EditText) this.findViewById(R.id.text_name)).getText().toString();
                 String wDescription = ((EditText) this.findViewById(R.id.text_description)).getText().toString();
 
@@ -79,12 +83,13 @@ public class CreateProgram extends AppCompatActivity {
                 UltimateTimer.mUltimateList.add(wNewProg);
 
                 //Mise à jour du fichier qui contient la liste de tout les programmes
-                SharedPreferences wUltimateTimer = getSharedPreferences("UltimateTimer", Context.MODE_APPEND);
-                int wSize = wUltimateTimer.getInt("Size", 0);
+                SharedPreferences wUltimateTimer = getSharedPreferences(UltimateTimer.SP_FILE_FORMAT + UltimateTimer.SP_APP_NAME,
+                                                                        Context.MODE_APPEND);
+                int wSize = wUltimateTimer.getInt(SP_SIZE, 0);
                 SharedPreferences.Editor wEditor = wUltimateTimer.edit();
-                wEditor.putString("Program_"+wSize, wNewProg.getName());
-                wSize ++;
-                wEditor.putInt("Size",wSize);
+                wEditor.putString(SP_PREFIX + wSize, wNewProg.getName());
+                wSize++;
+                wEditor.putInt(SP_SIZE, wSize);
                 wEditor.commit();
 
                 this.finish();
@@ -121,8 +126,8 @@ public class CreateProgram extends AppCompatActivity {
         wSeconds.setMaxValue(59);
         wSeconds.setWrapSelectorWheel(true);
 
-        wBuilder.setMessage("Choose your duration set up");
-        wBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        wBuilder.setMessage(R.string.chooseduration);
+        wBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
@@ -130,34 +135,35 @@ public class CreateProgram extends AppCompatActivity {
         });
 
         //On affiche le button set positive uniquement si name n'est pas vide et s'il y a au moins un Timer ajouté
-        wBuilder.setPositiveButton("Add",null);
+        wBuilder.setPositiveButton(R.string.add, null);
 
         final AlertDialog wDialog = wBuilder.create();
 
         wDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                                      @Override
-                                      public void onShow(DialogInterface dialog) {
-                                          Button b = wDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                                          b.setOnClickListener(new View.OnClickListener() {
-                                              @Override
-                                              public void onClick(View v) {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                Button b = wDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                b.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-                                                  if( wName.getText() != null && !(wHours.getValue() == 0 && wMinutes.getValue() == 0 && wSeconds.getValue() == 0))
-                                                  {
-                                                      mAdapter.addItem(new Duration(wName.getText().toString(),
-                                                              wDescription.getText().toString(),
-                                                              wHours.getValue(),
-                                                              wMinutes.getValue(),
-                                                              wSeconds.getValue()));
+                        if (wName.getText() != null && !(wHours.getValue() == 0 && wMinutes.getValue() == 0 && wSeconds.getValue() == 0)) {
+                            mAdapter.addItem(new Duration(wName.getText().toString(),
+                                    wDescription.getText().toString(),
+                                    wHours.getValue(),
+                                    wMinutes.getValue(),
+                                    wSeconds.getValue()));
 
-                                                      Toast.makeText(CreateProgram.this, "Duration " + wName.getText().toString() + " added.", Toast.LENGTH_LONG).show();
-                                                  }
-                                                  wDialog.dismiss();
-                                              }
-                                          });
+                            Toast.makeText(CreateProgram.this,
+                                    CreateProgram.this.getString(R.string.durationadded, wName.getText().toString()),
+                                    Toast.LENGTH_LONG).show();
+                        }
+                        wDialog.dismiss();
+                    }
+                });
 
-                                      }
-                                  });
+            }
+        });
         wDialog.show();
 
     }
@@ -171,22 +177,17 @@ public class CreateProgram extends AppCompatActivity {
         wBuilder.setView(wView);
 
         final ListView wListView = (ListView) wView.findViewById(R.id.program_list);
-        //on affiche uniquement le nom des programmes disponibles
-        //final ArrayList<String> wDisplayedList = new ArrayList<>();
-        //for (int i = 0; i < UltimateTimer.mUltimateList.size(); i++) {
-        //    wDisplayedList.add(UltimateTimer.mUltimateList.get(i).getName());
-        //}
         wListView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, UltimateTimer.mUltimateNames));
         wListView.setOnItemClickListener(new OnProgramClickListener());
 
-        wBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        wBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
         });
 
-        wBuilder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+        wBuilder.setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (((OnProgramClickListener) wListView.getOnItemClickListener()).hasSelected()) {
@@ -194,7 +195,9 @@ public class CreateProgram extends AppCompatActivity {
                     mAdapter.addItem((Program) UltimateTimer.mUltimateList.get(wPosition));
                     mAdapter.notifyDataSetChanged();
 
-                    Toast.makeText(CreateProgram.this, "Program " + "" + " added.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CreateProgram.this,
+                            CreateProgram.this.getString(R.string.programadded,UltimateTimer.mUltimateList.get(wPosition).getName()),
+                            Toast.LENGTH_LONG).show();
                 }
             }
         });

@@ -1,13 +1,5 @@
 [
     {
-        "merged": "C:\\Users\\pierre\\AndroidStudioProjects\\UltimateTImer\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\stopwatch.png",
-        "source": "C:\\Users\\pierre\\AndroidStudioProjects\\UltimateTImer\\app\\build\\generated\\res\\pngs\\debug\\drawable-ldpi\\stopwatch.png"
-    },
-    {
-        "merged": "C:\\Users\\pierre\\AndroidStudioProjects\\UltimateTImer\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\icone.png",
-        "source": "C:\\Users\\pierre\\AndroidStudioProjects\\UltimateTImer\\app\\build\\generated\\res\\pngs\\debug\\drawable-ldpi\\icone.png"
-    },
-    {
         "merged": "C:\\Users\\pierre\\AndroidStudioProjects\\UltimateTimer\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\stopwatch.png",
         "source": "C:\\Users\\pierre\\AndroidStudioProjects\\UltimateTimer\\app\\build\\generated\\res\\pngs\\debug\\drawable-ldpi\\stopwatch.png"
     },

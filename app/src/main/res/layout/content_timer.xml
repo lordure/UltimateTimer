@@ -14,20 +14,24 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/id_name"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/id_description"
-        android:layout_below="@+id/id_name"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginLeft="20dp"
+        android:textSize="18dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_below="@id/id_description"
+        android:id="@+id/idview"
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="15dp"/>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/id_interval"
         android:clickable="false"
-        android:layout_below="@+id/id_description"
-        android:layout_marginLeft="10dp"/>
+        android:layout_below="@+id/idview"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,21 +43,21 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableLeft="@android:drawable/ic_media_play"
-            android:text="play"
+            android:text="R.string.play"
             android:id="@+id/launcher"/>
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableLeft="@android:drawable/ic_media_pause"
-            android:text="pause"
+            android:text="R.string.pause"
             android:id="@+id/pauser"/>
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableLeft="@android:drawable/ic_delete"
-            android:text="stop"
+            android:text="R.string.stop"
             android:id="@+id/stopper"/>
     </LinearLayout>
     <TextView

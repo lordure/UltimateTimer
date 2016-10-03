@@ -1,4 +1,4 @@
-package ultimatetimer.ultimatetimer;
+package ultimatetimer.ultimatetimer.TimerActivityPackage;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,6 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import ultimatetimer.ultimatetimer.Duration;
+import ultimatetimer.ultimatetimer.R;
+import ultimatetimer.ultimatetimer.Timer;
 
 /**
  * Created by pierre on 08/05/2016.

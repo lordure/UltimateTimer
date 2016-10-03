@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +26,7 @@ public class UltimateTimer extends AppCompatActivity {
     public static ArrayList<String> mUltimateNames = new ArrayList<>();
 
     public final static String SP_FILE_FORMAT = "com.ultimatetimer.app.";
+    public final static String SP_APP_NAME = "UltimateTimer";
 
     private ListProgAdapter mAdapter = new ListProgAdapter(this, mUltimateList);
     private ListView listPrograms;
@@ -34,8 +36,8 @@ public class UltimateTimer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ultimate_timer);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         listPrograms = (ListView) this.findViewById(R.id.listPrograms);
         addProg = (FloatingActionButton) this.findViewById(R.id.fb_add_prog);
@@ -84,46 +86,32 @@ public class UltimateTimer extends AppCompatActivity {
     }
 
     private void getUltimateList() {
-        //TODO mise en place de la récupération des données
+        //Si la liste n'est pas vide alors on la clear
+        if(!mUltimateList.isEmpty())
+        {
+            mUltimateList.clear();
+            mUltimateNames.clear();
+        }
+
         //Le nom des programmes est stocké dans un SharedPreferences "ultimatetimer"
-        SharedPreferences wUltimateSharedPref = getSharedPreferences("UltimateTimer", Context.MODE_APPEND);
-        int wSize = wUltimateSharedPref.getInt("Size", 0);
+        SharedPreferences wUltimateSharedPref = getSharedPreferences(SP_FILE_FORMAT + SP_APP_NAME, Context.MODE_APPEND);
+        int wSize = wUltimateSharedPref.getInt(CreateProgram.SP_SIZE, 0);
 
         for(int i = 0; i < wSize; i ++)
         {
-            mUltimateNames.add(wUltimateSharedPref.getString("Program_"+i,null));
+            mUltimateNames.add(wUltimateSharedPref.getString(CreateProgram.SP_PREFIX+i,null));
             //Et on ouvre le SP correspondant
             SharedPreferences wProgramSP = getSharedPreferences(mUltimateNames.get(i),Context.MODE_APPEND);
             Timer wTimer = Program.GetProgramFromSharedPreferences(wProgramSP,this);
             if( wTimer != null)
                 mUltimateList.add(wTimer);
         }
-
-        //Pour le moment on écrit en dur nos data
-        //ArrayList<Timer> list_1 = new ArrayList<Timer>();
-        //list_1.add(new Duration("Duration 1", "Description 1", 0, 1, 10));
-        //list_1.add(new Duration("Duration 2", "Description 2", 0, 0, 10));
-        //list_1.add(new Duration("Duration 3", "Description 3", 7, 8, 9));
-        //ArrayList<Timer> list_2 = new ArrayList<Timer>();
-        //list_2.add(new Duration("Duration 4", "Description 4", 10, 20, 30));
-        //ArrayList<Timer> list_3 = new ArrayList<Timer>();
-        //list_3.add(new Duration("Duration 5", "Description 5", 100, 200, 300));
-        //Program program_1 = new Program("Program 1", "Description program 1", list_1);
-        //Program program_2 = new Program("Program 2", "Description program 2", list_2);
-        //Program program_3 = new Program("Program 3", "Description program 3", list_3);
-//
-        //mUltimateList.add(program_1);
-        //mUltimateList.add(program_2);
-        //mUltimateList.add(program_3);
-
-        //DEBUG
-        this.loadSharedPrefs("UltimateTimer","name 1");
-
         Log.i("UltimateTimerActivity", "UltimateList done");
     }
 
     public void UpdateTrainingList() {
         this.mAdapter.notifyDataSetChanged();
+        mUltimateNames.add(mUltimateList.get(mUltimateList.size()-1).getName());
     }
 
     public void loadSharedPrefs(String ... prefs) {

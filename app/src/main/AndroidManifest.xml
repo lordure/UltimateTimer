@@ -7,7 +7,7 @@
         android:allowBackup="true"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".UltimateTimer"
             android:label="@string/app_name"
@@ -33,7 +33,7 @@
         <activity
             android:name=".ProgramCreation.CreateProgram"
             android:label="@string/title_activity_form"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

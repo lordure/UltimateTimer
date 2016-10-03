@@ -1,0 +1,29 @@
+<resources>
+    <!-- High level strings && general strings-->
+    <string name="app_name">Ultimate Timer</string>
+    <string name="action_settings">Réglages</string>
+    <string name="title_activity_timer">TimerActivity</string>
+    <string name="title_activity_form">FormActivity</string>
+    <string name="name">Nom</string>
+    <string name="description">Description</string>
+
+    <!-- Program creation -->
+    <string name="choosetimer">Nouveau programme ou interval??</string>
+    <string name="chooseprogram">Programme</string>
+    <string name="chooseduration">Interval</string>
+    <string name="cancel">Annuler</string>
+    <string name="add">Ajouter</string>
+    <string name="programadded">Programme %1s ajouté.</string>
+    <string name="durationadded">Interval %1s ajouté.</string>
+
+    <!-- Timer Activity -->
+    <string name="timeractivitytitle"></string>
+    <string name="trainingpaused">Entrainement en pause</string>
+    <string name="currentpaused">Etat : en pause</string>
+    <string name="trainingcancelled">Entrainement annulé</string>
+    <string name="trainingnone">Etat : fini</string>
+    <string name="current">Actuel</string>
+    <string name="play">Lancer</string>
+    <string name="pause">Pause</string>
+    <string name="stop">Stop</string>
+</resources>

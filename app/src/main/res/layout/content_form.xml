@@ -22,13 +22,16 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <EditText
             android:id="@+id/text_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name"
+            android:hint="R.string.name"
             android:maxLines="1" />
 
         <EditText
@@ -36,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/text_name"
-            android:hint="Description" />
+            android:hint="R.string.description" />
 
         <LinearLayout
             android:id="@+id/linear_layout_add"
