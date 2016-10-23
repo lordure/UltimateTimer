@@ -97,7 +97,7 @@ public class Program extends Timer implements Parcelable
 
         //Maintenant on écrit les bonnes valeurs
         editor.putString(SP_Name,mName);
-        editor.putString(SP_Description,"Description");
+        editor.putString(SP_Description, mDescription);
         editor.putInt(SP_Size, listTimer.size());
         for(int i = 0; i < listTimer.size(); i ++)
         {
@@ -176,14 +176,9 @@ public class Program extends Timer implements Parcelable
                 sharedPref.getString(SP_Timer_Pre + String.valueOf(i) + SP_SUFFIXE_Name, Sub_Name);
                 String Sub_Description = new String();
                 sharedPref.getString(SP_Timer_Pre + String.valueOf(i) + SP_SUFFIXE_Description, Sub_Description);
-                int hours = 0;
-                int minutes = 0;
-                int seconds = 0;
-                sharedPref.getInt(SP_Timer_Pre + String.valueOf(i) + SP_Duration_Hours, hours);
-                sharedPref.getInt(SP_Timer_Pre + String.valueOf(i) + SP_Duration_Minutes, minutes);
-                sharedPref.getInt(SP_Timer_Pre + String.valueOf(i) + SP_Duration_Seconds, seconds);
-
-
+                int hours = sharedPref.getInt(SP_Timer_Pre + String.valueOf(i) + SP_Duration_Hours, 0);
+                int minutes = sharedPref.getInt(SP_Timer_Pre + String.valueOf(i) + SP_Duration_Minutes, 0);
+                int seconds = sharedPref.getInt(SP_Timer_Pre + String.valueOf(i) + SP_Duration_Seconds, 0);
                 Duration duration = new Duration(Sub_Name,Sub_Description,hours,minutes,seconds);
 
                 prog.addProgramInList(duration);

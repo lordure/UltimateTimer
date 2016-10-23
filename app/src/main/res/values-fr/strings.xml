@@ -15,6 +15,9 @@
     <string name="add">Ajouter</string>
     <string name="programadded">Programme %1s ajouté.</string>
     <string name="durationadded">Interval %1s ajouté.</string>
+    <string name="namemandatory">Nom *</string>
+    <string name="add_program">Ajout d\'un programme</string>
+    <string name="add_duration">Ajout d\'un interval</string>
 
     <!-- Timer Activity -->
     <string name="timeractivitytitle"></string>

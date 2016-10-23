@@ -81,6 +81,7 @@ public class CreateProgram extends AppCompatActivity {
                 wNewProg.SaveAsSharedPreferences(wSP);
 
                 UltimateTimer.mUltimateList.add(wNewProg);
+                UltimateTimer.mUltimateNames.add(wNewProg.getName());
 
                 //Mise à jour du fichier qui contient la liste de tout les programmes
                 SharedPreferences wUltimateTimer = getSharedPreferences(UltimateTimer.SP_FILE_FORMAT + UltimateTimer.SP_APP_NAME,

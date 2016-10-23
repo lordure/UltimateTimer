@@ -22,9 +22,9 @@ public class ListProgAdapter extends BaseAdapter implements AdapterView.OnItemCl
     Context context;
     ArrayList<Timer> myList = new ArrayList<Timer>();
 
-    public ListProgAdapter(Context context, ArrayList<Timer> myList) {
+    public ListProgAdapter(Context context, ArrayList<Timer> aList) {
         this.context = context;
-        this.myList = myList;
+        this.myList = aList;
     }
 
     public int getCount() {

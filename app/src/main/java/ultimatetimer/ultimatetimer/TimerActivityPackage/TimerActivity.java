@@ -1,10 +1,13 @@
 package ultimatetimer.ultimatetimer.TimerActivityPackage;
 
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -12,6 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import ultimatetimer.ultimatetimer.Duration;
 import ultimatetimer.ultimatetimer.Program;
@@ -35,6 +41,11 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
         //Ecriture des caractéristiques du timer en cours
         TextView tv_description = (TextView) this.findViewById(R.id.id_description);
         ListView listProgram = (ListView) this.findViewById(R.id.id_interval);
+
+        //Setup du text size du countdownclock à la taille height du text view
+        TextView tv_countdown = (TextView) this.findViewById(R.id.countdownClock);
+        //float sourceTextSize = tv_countdown.getTextSize();
+        //tv_countdown.setTextSize(sourceTextSize / getResources().getDisplayMetrics().density);
 
         //Récupération du timer demandé
         Program program = this.getIntent().getExtras().getParcelable("program");
@@ -103,8 +114,8 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
 
 
         //A chaque transition il y a une seconde en plus -> si ce n'est pas le premier tour on enlève un seconde :
-        if (mTrainingCursor != 0)
-            millisInFuture -= 1000;
+        //if (mTrainingCursor != 0)
+        //    millisInFuture -= 1000;
         if (this.mStoredMillisInFuture != 0) {
             millisInFuture = this.mStoredMillisInFuture;
             this.mStoredMillisInFuture = 0;
@@ -143,7 +154,7 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
 
     public void onTick() {
         final TextView countdownClock = (TextView) this.findViewById(R.id.countdownClock);
-        countdownClock.setText(R.string.current + " : " + this.mCountDown.getFormatedCountDown());
+        countdownClock.setText(this.mCountDown.getFormatedCountDown());
 
     }
 
@@ -151,7 +162,6 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
         //2 cas possible. Soit il y a un timer encore après soit c'est fini.
         //Dans tous les cas on bips ^^
 
-        // TODO : BIPPER
         ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 100);
         toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200);
 
@@ -165,5 +175,4 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
             TimerActivity.this.mTrainingCursor++;
         }
     }
-
 }

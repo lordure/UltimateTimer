@@ -44,11 +44,6 @@ public class UltimateTimer extends AppCompatActivity {
 
         //On récupère la liste des programs enregistrés
         getUltimateList();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
 
         //On assigne l'adapter à notre list
         listPrograms.setAdapter(mAdapter);
@@ -61,7 +56,14 @@ public class UltimateTimer extends AppCompatActivity {
                 UltimateTimer.this.startActivity(i);
             }
         });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.loadSharedPrefs("tabata");
+
+        this.mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -107,6 +109,7 @@ public class UltimateTimer extends AppCompatActivity {
                 mUltimateList.add(wTimer);
         }
         Log.i("UltimateTimerActivity", "UltimateList done");
+        mAdapter.notifyDataSetChanged();
     }
 
     public void UpdateTrainingList() {
