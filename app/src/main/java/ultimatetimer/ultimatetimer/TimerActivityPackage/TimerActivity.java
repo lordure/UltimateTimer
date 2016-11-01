@@ -44,7 +44,16 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
 
         //Récupération du timer demandé
         Program program = this.getIntent().getExtras().getParcelable("program");
-        tv_description.setText(program.getDescription());
+        if (program.getDescription().isEmpty())
+        {
+            tv_description.setVisibility(View.GONE);
+            View wLine = (View) this.findViewById(R.id.idview);
+            wLine.setVisibility(View.GONE);
+        }
+        else
+        {
+            tv_description.setText(program.getDescription());
+        }
 
         toolbar.setTitle(program.getName());
         setSupportActionBar(toolbar);
