@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -70,32 +71,45 @@ public class CreateProgram extends AppCompatActivity {
                 //TODO empêcher la création d'un program si le nom est déjà pris
 
                 String wName = ((EditText) this.findViewById(R.id.text_name)).getText().toString();
-                String wDescription = ((EditText) this.findViewById(R.id.text_description)).getText().toString();
+                if(wName.isEmpty())
+                {
+                    Toast.makeText(this, R.string.name_is_mandatory, Toast.LENGTH_LONG).show();
+                    return false;
+                }
+                else if (UltimateTimer.mUltimateNames.contains(wName))
+                {
 
-                ArrayList<Timer> wListTraining = ((ListFormAdapter) ((ListView) this.findViewById(R.id.list_training)).getAdapter()).getList();
+                    Toast.makeText(CreateProgram.this, R.string.name_already_taken, Toast.LENGTH_LONG).show();
+                    return false;
+                }
+                else {
+                    String wDescription = ((EditText) this.findViewById(R.id.text_description)).getText().toString();
 
-                Program wNewProg = new Program(wName, wDescription, wListTraining);
+                    ArrayList<Timer> wListTraining = ((ListFormAdapter) ((ListView) this.findViewById(R.id.list_training)).getAdapter()).getList();
 
-                //On sauvegarde notre programme dans la mémoire du téléphone
-                SharedPreferences wSP = getSharedPreferences(wNewProg.getName(), Context.MODE_PRIVATE);
-                wNewProg.SaveAsSharedPreferences(wSP);
+                    Program wNewProg = new Program(wName, wDescription, wListTraining);
 
-                UltimateTimer.mUltimateList.add(wNewProg);
-                UltimateTimer.mUltimateNames.add(wNewProg.getName());
+                    //On sauvegarde notre programme dans la mémoire du téléphone
+                    SharedPreferences wSP = getSharedPreferences(wNewProg.getName(), Context.MODE_PRIVATE);
+                    wNewProg.SaveAsSharedPreferences(wSP);
 
-                //Mise à jour du fichier qui contient la liste de tout les programmes
-                SharedPreferences wUltimateTimer = getSharedPreferences(UltimateTimer.SP_FILE_FORMAT + UltimateTimer.SP_APP_NAME,
-                                                                        Context.MODE_APPEND);
-                int wSize = wUltimateTimer.getInt(SP_SIZE, 0);
-                SharedPreferences.Editor wEditor = wUltimateTimer.edit();
-                wEditor.putString(SP_PREFIX + wSize, wNewProg.getName());
-                wSize++;
-                wEditor.putInt(SP_SIZE, wSize);
-                wEditor.commit();
+                    UltimateTimer.mUltimateList.add(wNewProg);
+                    UltimateTimer.mUltimateNames.add(wNewProg.getName());
 
-                this.finish();
+                    //Mise à jour du fichier qui contient la liste de tout les programmes
+                    SharedPreferences wUltimateTimer = getSharedPreferences(UltimateTimer.SP_FILE_FORMAT + UltimateTimer.SP_APP_NAME,
+                            Context.MODE_APPEND);
+                    int wSize = wUltimateTimer.getInt(SP_SIZE, 0);
+                    SharedPreferences.Editor wEditor = wUltimateTimer.edit();
+                    wEditor.putString(SP_PREFIX + wSize, wNewProg.getName());
+                    wSize++;
+                    wEditor.putInt(SP_SIZE, wSize);
+                    wEditor.commit();
 
-                return true;
+                    this.finish();
+
+                    return true;
+                }
         }
 
         return super.onOptionsItemSelected(item);
@@ -108,6 +122,7 @@ public class CreateProgram extends AppCompatActivity {
         LayoutInflater wLayoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View wView = wLayoutInflater.inflate(R.layout.choose_duration_dialog_layout, null);
         wBuilder.setView(wView);
+        wBuilder.setTitle(R.string.title_add_duration);
         final NumberPicker wHours = (NumberPicker) wView.findViewById(R.id.number_hours);
         final NumberPicker wMinutes = (NumberPicker) wView.findViewById(R.id.number_minutes);
         final NumberPicker wSeconds = (NumberPicker) wView.findViewById(R.id.number_seconds);
@@ -123,11 +138,11 @@ public class CreateProgram extends AppCompatActivity {
         wMinutes.setMaxValue(59);
         wMinutes.setWrapSelectorWheel(true);
 
+
         wSeconds.setMinValue(0);
         wSeconds.setMaxValue(59);
         wSeconds.setWrapSelectorWheel(true);
 
-        wBuilder.setMessage(R.string.chooseduration);
         wBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -148,7 +163,7 @@ public class CreateProgram extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        if (wName.getText() != null && !(wHours.getValue() == 0 && wMinutes.getValue() == 0 && wSeconds.getValue() == 0)) {
+                        if (!wName.getText().toString().isEmpty() && !(wHours.getValue() == 0 && wMinutes.getValue() == 0 && wSeconds.getValue() == 0)) {
                             mAdapter.addItem(new Duration(wName.getText().toString(),
                                     wDescription.getText().toString(),
                                     wHours.getValue(),
@@ -158,8 +173,16 @@ public class CreateProgram extends AppCompatActivity {
                             Toast.makeText(CreateProgram.this,
                                     CreateProgram.this.getString(R.string.durationadded, wName.getText().toString()),
                                     Toast.LENGTH_LONG).show();
+                            wDialog.dismiss();
                         }
-                        wDialog.dismiss();
+                        else if (wName.getText().toString().isEmpty())
+                        {
+                            Toast.makeText(CreateProgram.this,R.string.name_is_mandatory,Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+                                Toast.makeText(CreateProgram.this, R.string.duration_is_mandatory, Toast.LENGTH_LONG).show();
+                        }
                     }
                 });
 
@@ -181,6 +204,8 @@ public class CreateProgram extends AppCompatActivity {
         wListView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, UltimateTimer.mUltimateNames));
         wListView.setOnItemClickListener(new OnProgramClickListener());
 
+        wBuilder.setTitle(R.string.title_add_program);
+
         wBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -200,6 +225,9 @@ public class CreateProgram extends AppCompatActivity {
                             CreateProgram.this.getString(R.string.programadded,UltimateTimer.mUltimateList.get(wPosition).getName()),
                             Toast.LENGTH_LONG).show();
                 }
+                else {
+                    Toast.makeText(CreateProgram.this, R.string.program_is_mandatory, Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -217,6 +245,18 @@ public class CreateProgram extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             mSelectedItem = position;
+
+            for(int i = 0; i < parent.getCount(); i ++)
+            {
+                if(i == position)
+                {
+                    parent.getChildAt(i).setBackgroundColor(Color.GRAY);
+                }
+                else
+                {
+                    parent.getChildAt(i).setBackgroundColor(Color.TRANSPARENT);
+                }
+            }
         }
 
         public boolean hasSelected() {

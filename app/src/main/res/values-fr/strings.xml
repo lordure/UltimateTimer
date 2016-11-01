@@ -9,8 +9,6 @@
 
     <!-- Program creation -->
     <string name="choosetimer">Nouveau programme ou interval??</string>
-    <string name="chooseprogram">Programme</string>
-    <string name="chooseduration">Interval</string>
     <string name="cancel">Annuler</string>
     <string name="add">Ajouter</string>
     <string name="programadded">Programme %1s ajouté.</string>
@@ -24,9 +22,15 @@
     <string name="trainingpaused">Entrainement en pause</string>
     <string name="currentpaused">Etat : en pause</string>
     <string name="trainingcancelled">Entrainement annulé</string>
-    <string name="trainingnone">Etat : fini</string>
+    <string name="trainingnone">00:00:00</string>
     <string name="current">Actuel</string>
     <string name="play">Lancer</string>
     <string name="pause">Pause</string>
     <string name="stop">Stop</string>
+    <string name="name_is_mandatory">Le nom est obligatoire</string>
+    <string name="name_already_taken">Ce programme existe déjà</string>
+    <string name="title_add_program">Ajouter un program</string>
+    <string name="title_add_duration">Ajouter une durée</string>
+    <string name="duration_is_mandatory">00:00:00 est incorrect</string>
+    <string name="program_is_mandatory">Vous n\'avez rien sélectionné</string>
 </resources>

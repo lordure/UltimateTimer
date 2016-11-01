@@ -1,5 +1,6 @@
 package ultimatetimer.ultimatetimer.TimerActivityPackage;
 
+import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
@@ -74,7 +75,8 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
                     //Les millis sont déjà sauvées dans mStoredMillisInFuture
                     TimerActivity.this.mStoredMillisInFuture = TimerActivity.this.mCountDown.getMillisUntilFinished();
 
-                    countdownClock.setText(R.string.currentpaused + "[" + TimerActivity.this.mCountDown.getFormatedCountDown() + "]");
+                    countdownClock.setTextColor(Color.YELLOW);
+                    countdownClock.setText(TimerActivity.this.mCountDown.getFormatedCountDown());
                     TimerActivity.this.mCountDown.cancel();
 
                     Toast.makeText(TimerActivity.this, R.string.trainingpaused, Toast.LENGTH_LONG).show();
@@ -94,6 +96,7 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
                     Toast.makeText(TimerActivity.this, R.string.trainingcancelled, Toast.LENGTH_LONG).show();
 
                     TimerActivity.this.mTrainingCursor = 0;
+                    TimerActivity.this.mStoredMillisInFuture = 0;
                 }
             }
         });
@@ -147,8 +150,8 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
 
     public void onTick() {
         final TextView countdownClock = (TextView) this.findViewById(R.id.countdownClock);
+        countdownClock.setTextColor(Color.BLACK);
         countdownClock.setText(this.mCountDown.getFormatedCountDown());
-
     }
 
     public void onFinish() {

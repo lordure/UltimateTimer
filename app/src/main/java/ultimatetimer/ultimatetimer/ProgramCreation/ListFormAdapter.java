@@ -76,7 +76,9 @@ public class ListFormAdapter extends BaseAdapter {
                 Log.i("ListFormAdapter", "Ajout d'une duration : name::" + mList.get(position).getName());
                 myView.name.setText(mList.get(position).getName());
                 myView.description.setText(mList.get(position).getDescription());
-                myView.duration.setText(((Duration) mList.get(position)).getHours() + ":" + ((Duration) mList.get(position)).getMinutes() + ":" + ((Duration) mList.get(position)).getSeconds());
+                myView.duration.setText(String.format("%02d",((Duration) mList.get(position)).getHours())
+                        + ":" + String.format("%02d",((Duration) mList.get(position)).getMinutes())
+                        + ":" + String.format("%02d",((Duration) mList.get(position)).getSeconds()));
 
                 convertView.setTag(myView);
             } else {

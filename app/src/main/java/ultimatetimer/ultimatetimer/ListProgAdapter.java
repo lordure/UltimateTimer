@@ -72,7 +72,7 @@ public class ListProgAdapter extends BaseAdapter implements AdapterView.OnItemCl
         //Si le timer sélectionné est une durée, on affiche les valeurs
         if (timer instanceof Duration) {
             Duration duration = (Duration) timer;
-            intervalView.Name.setText(duration.getHours()+":"+duration.getMinutes()+":"+duration.getSeconds());
+            intervalView.Name.setText(String.format("%02d",duration.getHours())+":"+String.format("%02d",duration.getMinutes())+":"+String.format("%02d",duration.getSeconds()));
         }
 
         return convertView;
