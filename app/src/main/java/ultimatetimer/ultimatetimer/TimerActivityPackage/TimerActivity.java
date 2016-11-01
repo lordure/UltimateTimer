@@ -1,13 +1,10 @@
 package ultimatetimer.ultimatetimer.TimerActivityPackage;
 
-import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -15,16 +12,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 import ultimatetimer.ultimatetimer.Duration;
 import ultimatetimer.ultimatetimer.Program;
 import ultimatetimer.ultimatetimer.R;
 
 public class TimerActivity extends AppCompatActivity implements CountDownListener {
-    private ArrayList<Duration> completeTraining = new ArrayList<Duration>();
+    private ArrayList<Duration> mCompleteTraining = new ArrayList<Duration>();
     private long mStoredMillisInFuture = 0;
     private int mTrainingCursor = 0;
     private ExtendedCountDownTimer mCountDown;
@@ -56,7 +50,7 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
 
         getCompleteTraining(program);
 
-        ListDurationAdapter listDurationAdapter = new ListDurationAdapter(this, completeTraining);
+        ListDurationAdapter listDurationAdapter = new ListDurationAdapter(this, mCompleteTraining);
         listProgram.setAdapter(listDurationAdapter);
 
 
@@ -109,7 +103,7 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
     private void setCountDownTimer() {
         //On affiche le décompte de la première Duration
 
-        Duration duration = completeTraining.get(this.mTrainingCursor);
+        Duration duration = mCompleteTraining.get(this.mTrainingCursor);
         long millisInFuture = 0;
 
 
@@ -122,7 +116,6 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
         } else {
             millisInFuture = duration.getHours() * (60 * 60 * 1000) + duration.getMinutes() * 60 * 1000 + duration.getSeconds() * 1000;
         }
-
 
         //Une fois que l'on a affiché le programme en entier on affiche le chrono
         //Classe : CountdownTimer
@@ -138,7 +131,7 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
 
         for (int i = 0; i < program.getListTimer().size(); i++) {
             if (program.getListTimer().get(i) instanceof Duration) {
-                completeTraining.add((Duration) program.getListTimer().get(i));
+                mCompleteTraining.add((Duration) program.getListTimer().get(i));
             }
             //Sinon il faut parcourir les différents programmes imbriqués jusqu'à trouver une Duration
             else if (program.getListTimer().get(i) instanceof Program) {
@@ -165,14 +158,16 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
         ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 100);
         toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200);
 
-        if (TimerActivity.this.mTrainingCursor == completeTraining.size() - 1) {
+        if (TimerActivity.this.mTrainingCursor == mCompleteTraining.size() - 1) {
             //Alors c'est fini bien fini
-            //countdownClock.setText("Done!");
-            TimerActivity.this.mTrainingCursor = -1;
+            //On réinitialise mTrainingCursor sans appeler setCountDownTimer pour ne pas relancer l'appli
+            TimerActivity.this.mTrainingCursor = 0;
         } else {
             //Sinon on relance la fonction avec la duration suivante
             //setCountDownTimer(i + 1);
             TimerActivity.this.mTrainingCursor++;
+            //Et on appelle setCOuntDownTimer ue nouvelle fois
+            this.setCountDownTimer();
         }
     }
 }
