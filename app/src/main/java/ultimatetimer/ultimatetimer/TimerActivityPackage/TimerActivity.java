@@ -111,8 +111,7 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
 
 
         //A chaque transition il y a une seconde en plus -> si ce n'est pas le premier tour on enlève un seconde :
-        //if (mTrainingCursor != 0)
-        //    millisInFuture -= 1000;
+        // TODO Vérifier cette assertion
         if (this.mStoredMillisInFuture != 0) {
             millisInFuture = this.mStoredMillisInFuture;
             this.mStoredMillisInFuture = 0;
@@ -158,8 +157,14 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
         //2 cas possible. Soit il y a un timer encore après soit c'est fini.
         //Dans tous les cas on bips ^^
 
+        final TextView countdownClock = (TextView) this.findViewById(R.id.countdownClock);
+
         ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 100);
         toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200);
+
+        //On set le compteur à 0
+        countdownClock.setTextColor(Color.BLACK);
+        countdownClock.setText(R.string.trainingnone);
 
         if (TimerActivity.this.mTrainingCursor == mCompleteTraining.size() - 1) {
             //Alors c'est fini bien fini

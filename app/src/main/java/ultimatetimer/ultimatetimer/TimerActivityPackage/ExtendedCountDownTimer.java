@@ -46,10 +46,14 @@ public class ExtendedCountDownTimer extends CountDownTimer {
 
     public String getFormatedCountDown()
     {
+        //On doit afficher les secondes à l'arrond supérieur
+        boolean wUp = ((long) mMillis % 1000) != 0;
         long mSeconds = (long) mMillis / 1000;
         long hours = (long) mSeconds / (3600);
         long minutes = (long) (mSeconds % 3600) / 60;
         long seconds = (long) (mSeconds % 3600) % 60;
+        if (wUp)
+            seconds ++;
         return String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
     }
 }
