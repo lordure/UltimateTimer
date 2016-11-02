@@ -3,6 +3,7 @@ package ultimatetimer.ultimatetimer.ProgramCreation;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ public class ListFormAdapter extends BaseAdapter {
     Context mContext;
     ArrayList<Timer> mList = new ArrayList<>();
     LayoutInflater mInflater;
+    private int mTextSizeDP = 18;
 
     public ListFormAdapter(Context aContext) {
         mContext = aContext;
@@ -80,6 +82,10 @@ public class ListFormAdapter extends BaseAdapter {
                         + ":" + String.format("%02d",((Duration) mList.get(position)).getMinutes())
                         + ":" + String.format("%02d",((Duration) mList.get(position)).getSeconds()));
 
+                myView.name.setTextSize(TypedValue.COMPLEX_UNIT_DIP,this.mTextSizeDP);
+                myView.description.setTextSize(TypedValue.COMPLEX_UNIT_DIP,this.mTextSizeDP);
+                myView.duration.setTextSize(TypedValue.COMPLEX_UNIT_DIP,this.mTextSizeDP);
+
                 convertView.setTag(myView);
             } else {
                 myView = (DurationView) convertView.getTag();
@@ -92,6 +98,8 @@ public class ListFormAdapter extends BaseAdapter {
                 myView = new ProgramView();
                 myView.program = (TextView) convertView.findViewById(R.id.program_expandablelist);
                 myView.program.setText(mList.get(position).getName());
+
+                myView.program.setTextSize(TypedValue.COMPLEX_UNIT_DIP,this.mTextSizeDP);
 
                 convertView.setTag(myView);
             } else {
