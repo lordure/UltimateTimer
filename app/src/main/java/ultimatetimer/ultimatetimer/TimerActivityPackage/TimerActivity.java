@@ -39,8 +39,6 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
 
         //Setup du text size du countdownclock à la taille height du text view
         TextView tv_countdown = (TextView) this.findViewById(R.id.countdownClock);
-        //float sourceTextSize = tv_countdown.getTextSize();
-        //tv_countdown.setTextSize(sourceTextSize / getResources().getDisplayMetrics().density);
 
         //Récupération du timer demandé
         Program program = this.getIntent().getExtras().getParcelable("program");

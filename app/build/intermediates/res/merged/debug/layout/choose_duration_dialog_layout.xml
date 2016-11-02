@@ -5,12 +5,12 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="name*"
+        android:hint="@string/namemandatory"
         android:id="@+id/choose_name_duration"/>
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="description"
+        android:hint="@string/description"
         android:id="@+id/choose_description_duration"
         android:layout_below="@+id/choose_name_duration"/>
     <NumberPicker

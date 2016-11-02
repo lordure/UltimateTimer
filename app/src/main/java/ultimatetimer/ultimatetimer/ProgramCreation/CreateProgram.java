@@ -68,7 +68,6 @@ public class CreateProgram extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_menu_done:
-                //TODO empêcher la création d'un program si le nom est déjà pris
 
                 String wName = ((EditText) this.findViewById(R.id.text_name)).getText().toString();
                 if(wName.isEmpty())

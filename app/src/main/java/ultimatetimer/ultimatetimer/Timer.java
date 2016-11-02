@@ -14,7 +14,7 @@ public abstract class Timer implements Parcelable {
     public Timer()
     {
         this.mName = "name";
-        this.mDescription = "description";
+        this.mDescription = "";
     }
 
     public Timer(String aName, String aDescription)

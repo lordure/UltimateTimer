@@ -2332,12 +2332,12 @@ containing a value of this type.
         public static final int action_context_bar=0x7f0c005d;
         public static final int action_divider=0x7f0c0092;
         public static final int action_menu_divider=0x7f0c0002;
-        public static final int action_menu_done=0x7f0c009e;
+        public static final int action_menu_done=0x7f0c009f;
         public static final int action_menu_presenter=0x7f0c0003;
         public static final int action_mode_bar=0x7f0c0059;
         public static final int action_mode_bar_stub=0x7f0c0058;
         public static final int action_mode_close_button=0x7f0c003e;
-        public static final int action_settings=0x7f0c009f;
+        public static final int action_settings=0x7f0c00a0;
         public static final int actions_layout=0x7f0c007d;
         public static final int activity_chooser_view_content=0x7f0c003f;
         public static final int add_duration_timer=0x7f0c0077;
@@ -2475,6 +2475,7 @@ containing a value of this type.
         public static final int topPanel=0x7f0c0049;
         public static final int touch_outside=0x7f0c0082;
         public static final int tvdescription=0x7f0c009d;
+        public static final int tvduration=0x7f0c009e;
         public static final int tvname=0x7f0c009c;
         public static final int up=0x7f0c0009;
         public static final int useLogo=0x7f0c0014;
@@ -2554,6 +2555,7 @@ containing a value of this type.
         public static final int select_dialog_multichoice_material=0x7f04003a;
         public static final int select_dialog_singlechoice_material=0x7f04003b;
         public static final int support_simple_spinner_dropdown_item=0x7f04003c;
+        public static final int training_list_layout=0x7f04003d;
     }
     public static final class menu {
         public static final int menu_done=0x7f0d0000;
@@ -2584,15 +2586,15 @@ containing a value of this type.
         public static final int abc_toolbar_collapse_description=0x7f060012;
         public static final int action_settings=0x7f060032;
         public static final int add=0x7f060033;
-        public static final int app_name=0x7f060034;
-        public static final int appbar_scrolling_view_behavior=0x7f060043;
-        public static final int auth_google_play_services_client_facebook_display_name=0x7f060044;
-        public static final int auth_google_play_services_client_google_display_name=0x7f060045;
-        public static final int bottom_sheet_behavior=0x7f060046;
-        public static final int cancel=0x7f060035;
-        public static final int character_counter_pattern=0x7f060047;
-        public static final int chooseduration=0x7f060036;
-        public static final int chooseprogram=0x7f060037;
+        public static final int add_duration=0x7f060034;
+        public static final int add_program=0x7f060035;
+        public static final int app_name=0x7f060036;
+        public static final int appbar_scrolling_view_behavior=0x7f060055;
+        public static final int auth_google_play_services_client_facebook_display_name=0x7f060056;
+        public static final int auth_google_play_services_client_google_display_name=0x7f060057;
+        public static final int bottom_sheet_behavior=0x7f060058;
+        public static final int cancel=0x7f060037;
+        public static final int character_counter_pattern=0x7f060059;
         public static final int choosetimer=0x7f060038;
         public static final int common_android_wear_notification_needs_update_text=0x7f060013;
         public static final int common_android_wear_update_text=0x7f060014;
@@ -2626,15 +2628,33 @@ containing a value of this type.
         public static final int common_open_on_phone=0x7f060030;
         public static final int current=0x7f060039;
         public static final int currentpaused=0x7f06003a;
-        public static final int durationadded=0x7f06003b;
-        public static final int programadded=0x7f06003c;
+        public static final int description=0x7f06003b;
+        public static final int duration_is_mandatory=0x7f06003c;
+        public static final int durationadded=0x7f06003d;
+        public static final int emom=0x7f06003e;
+        public static final int exercice=0x7f06003f;
+        public static final int name=0x7f060040;
+        public static final int name_already_taken=0x7f060041;
+        public static final int name_is_mandatory=0x7f060042;
+        public static final int namemandatory=0x7f060043;
+        public static final int pause=0x7f060044;
+        public static final int play=0x7f060045;
+        public static final int preparation=0x7f060046;
+        public static final int prepareforworkout=0x7f060047;
+        public static final int program_is_mandatory=0x7f060048;
+        public static final int programadded=0x7f060049;
+        public static final int rest=0x7f06004a;
         public static final int status_bar_notification_info_overflow=0x7f060031;
-        public static final int timeractivitytitle=0x7f06003d;
-        public static final int title_activity_form=0x7f06003e;
-        public static final int title_activity_timer=0x7f06003f;
-        public static final int trainingcancelled=0x7f060040;
-        public static final int trainingnone=0x7f060041;
-        public static final int trainingpaused=0x7f060042;
+        public static final int stop=0x7f06004b;
+        public static final int timeractivitytitle=0x7f06004c;
+        public static final int title_activity_form=0x7f06004d;
+        public static final int title_activity_timer=0x7f06004e;
+        public static final int title_add_duration=0x7f06004f;
+        public static final int title_add_program=0x7f060050;
+        public static final int trainingcancelled=0x7f060051;
+        public static final int trainingnone=0x7f060052;
+        public static final int trainingpaused=0x7f060053;
+        public static final int whatever=0x7f060054;
     }
     public static final class style {
         public static final int AlertDialog_AppCompat=0x7f090088;

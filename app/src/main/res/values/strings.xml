@@ -33,4 +33,12 @@
     <string name="title_add_duration">Add a duration</string>
     <string name="duration_is_mandatory">00:00:00 is not valid</string>
     <string name="program_is_mandatory">Nothing is selected</string>
+
+    <!-- default program -->
+    <string name="exercice">Exercice</string>
+    <string name="rest">Rest</string>
+    <string name="whatever">Whatever you want</string>
+    <string name="preparation">Preparation</string>
+    <string name="emom">Every minute on the minute</string>
+    <string name="prepareforworkout">Prepare for the workout</string>
 </resources>

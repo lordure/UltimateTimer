@@ -1,0 +1,11 @@
+CHANGED,C:\Users\pierre\AndroidStudioProjects\UltimateTimer\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\ultimatetimer\ultimatetimer\TimerActivityPackage\ListDurationAdapter$override.class
+CHANGED,C:\Users\pierre\AndroidStudioProjects\UltimateTimer\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\ultimatetimer\ultimatetimer\R$string$override.class
+CHANGED,C:\Users\pierre\AndroidStudioProjects\UltimateTimer\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\ultimatetimer\ultimatetimer\R$id$override.class
+CHANGED,C:\Users\pierre\AndroidStudioProjects\UltimateTimer\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\ultimatetimer\ultimatetimer\R$override.class
+CHANGED,C:\Users\pierre\AndroidStudioProjects\UltimateTimer\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\ultimatetimer\ultimatetimer\R$mipmap$override.class
+CHANGED,C:\Users\pierre\AndroidStudioProjects\UltimateTimer\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\ultimatetimer\ultimatetimer\R$styleable$override.class
+CHANGED,C:\Users\pierre\AndroidStudioProjects\UltimateTimer\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\android\tools\fd\runtime\AppPatchesLoaderImpl.class
+CHANGED,C:\Users\pierre\AndroidStudioProjects\UltimateTimer\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\ultimatetimer\ultimatetimer\R$layout$override.class
+CHANGED,C:\Users\pierre\AndroidStudioProjects\UltimateTimer\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\ultimatetimer\ultimatetimer\R$style$override.class
+CHANGED,C:\Users\pierre\AndroidStudioProjects\UltimateTimer\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\ultimatetimer\ultimatetimer\R$menu$override.class
+CHANGED,C:\Users\pierre\AndroidStudioProjects\UltimateTimer\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\ultimatetimer\ultimatetimer\ListProgAdapter$override.class
