@@ -50,10 +50,11 @@ public class ListDurationAdapter extends BaseAdapter {
         if (convertView == null) {
             LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
-            convertView = mInflater.inflate(R.layout.program_item_layout, parent, false);
+            convertView = mInflater.inflate(R.layout.training_list_layout, parent, false);
 
             intervalView = new IntervalView();
             intervalView.Name = (TextView) convertView.findViewById(R.id.tvname);
+            intervalView.Duration = (TextView) convertView.findViewById(R.id.tvduration);
             intervalView.Description = (TextView) convertView.findViewById(R.id.tvdescription);
 
             convertView.setTag(intervalView);
@@ -69,7 +70,7 @@ public class ListDurationAdapter extends BaseAdapter {
         //Si le timer sélectionné est une durée, on affiche les valeurs
         if (timer instanceof Duration) {
             Duration duration = (Duration) timer;
-            intervalView.Name.setText(String.format("%02d",duration.getHours())+":"+String.format("%02d",duration.getMinutes())+":"+String.format("%02d",duration.getSeconds()));
+            intervalView.Duration.setText(String.format("%02d",duration.getHours())+":"+String.format("%02d",duration.getMinutes())+":"+String.format("%02d",duration.getSeconds()));
         }
 
         return convertView;
@@ -78,7 +79,7 @@ public class ListDurationAdapter extends BaseAdapter {
     //La classe IntervalView permet de ne pas devoir rechercher les vues
     //à chaque appel de getView => gain de perf
     private class IntervalView {
-        TextView Name, Description;
+        TextView Name, Description, Duration;
     }
 
 }

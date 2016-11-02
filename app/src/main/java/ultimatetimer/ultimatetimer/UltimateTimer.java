@@ -39,6 +39,8 @@ public class UltimateTimer extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        this.checkFirstRun();
+
         listPrograms = (ListView) this.findViewById(R.id.listPrograms);
         addProg = (FloatingActionButton) this.findViewById(R.id.fb_add_prog);
 
@@ -61,7 +63,8 @@ public class UltimateTimer extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        this.loadSharedPrefs("tabata");
+        this.loadSharedPrefs("Tabata");
+        this.loadSharedPrefs("EMOM");
 
         this.mAdapter.notifyDataSetChanged();
     }
@@ -160,6 +163,121 @@ public class UltimateTimer extends AppCompatActivity {
 
         Log.i("Loaded Shared Prefs", "------------------------------------");
 
+    }
+
+    private void checkFirstRun() {
+
+        final String SP_CONFIGURATION = "Khronos_configuration";
+        final String SP_VERSION_CODE = "version_code";
+        final int DOESNT_EXIST = -1;
+
+
+        // Get current version code
+        int currentVersionCode = 0;
+        try {
+            currentVersionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+        } catch (android.content.pm.PackageManager.NameNotFoundException e) {
+            // handle exception
+            e.printStackTrace();
+            return;
+        }
+
+        // Get saved version code
+        SharedPreferences prefs = getSharedPreferences(SP_CONFIGURATION, MODE_PRIVATE);
+        int savedVersionCode = prefs.getInt(SP_VERSION_CODE, DOESNT_EXIST);
+
+        // Check for first run or upgrade
+        if (currentVersionCode == savedVersionCode)
+        {
+            // This is just a normal run
+            return;
+        }
+        else if (savedVersionCode == DOESNT_EXIST)
+        {
+            //Dans le cadre d'une nouvelle install on pre-enregistre certains programmes, les classqiques ^^
+            Program wTabata = getTabata();
+            UltimateTimer.mUltimateNames.add("Tabata");
+            UltimateTimer.mUltimateList.add(wTabata);
+            SharedPreferences wSP = getSharedPreferences(wTabata.getName(), Context.MODE_PRIVATE);
+            wTabata.SaveAsSharedPreferences(wSP);
+
+            Program wEMOM = getEMOM();
+            UltimateTimer.mUltimateNames.add("EMOM");
+            UltimateTimer.mUltimateList.add(wEMOM);
+            SharedPreferences wSP2 = getSharedPreferences(wEMOM.getName(), Context.MODE_PRIVATE);
+            wEMOM.SaveAsSharedPreferences(wSP2);
+
+            //Création du fichier contenant la liste des programmes
+            //Mise à jour du fichier qui contient la liste de tout les programmes
+            SharedPreferences wUltimateTimer = getSharedPreferences(UltimateTimer.SP_FILE_FORMAT + UltimateTimer.SP_APP_NAME,
+                    Context.MODE_APPEND);
+            SharedPreferences.Editor wEditor = wUltimateTimer.edit();
+            wEditor.putString(CreateProgram.SP_PREFIX + 0, wTabata.getName());
+            wEditor.putString(CreateProgram.SP_PREFIX + 1, wEMOM.getName());
+            wEditor.putInt(CreateProgram.SP_SIZE, 2);
+            wEditor.commit();
+        } else if (currentVersionCode > savedVersionCode) {
+            //Rien à faire pour le moment
+            ;
+        }
+
+        // Update the shared preferences with the current version code
+        prefs.edit().putInt(SP_VERSION_CODE, currentVersionCode).commit();
+
+    }
+
+    private final Program getTabata()
+    {
+        //TABATA
+        Duration w20 = new Duration(getString(R.string.exercice),getString(R.string.whatever),0,0,20);
+        Duration w10 = new Duration(getString(R.string.rest),null, 0,0,10);
+        ArrayList<Timer> wTabataList = new ArrayList<Timer>();
+        wTabataList.add(new Duration(getString(R.string.preparation),getString(R.string.prepareforworkout), 0,0,15));
+        wTabataList.add(w20);
+        wTabataList.add(w10);
+        wTabataList.add(w20);
+        wTabataList.add(w10);
+        wTabataList.add(w20);
+        wTabataList.add(w10);
+        wTabataList.add(w20);
+        wTabataList.add(w10);
+        Program wTabata = new Program("Tabata","HIIT", wTabataList);
+
+        return wTabata;
+    }
+
+    private final Program BeteVosges()
+    {
+        return null;
+    }
+
+    private final Program getEMOM()
+    {
+        ArrayList<Timer> wList = new ArrayList<>();
+        wList.add(new Duration(getString(R.string.preparation),null, 0,0,15));
+        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
+        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
+        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
+        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
+        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
+        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
+        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
+        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
+        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
+        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
+        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
+        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
+        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
+        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
+        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
+        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
+        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
+        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
+        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
+        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
+        Program wEMOM = new Program("EMOM",getString(R.string.emom),wList );
+
+        return wEMOM;
     }
 
 }
