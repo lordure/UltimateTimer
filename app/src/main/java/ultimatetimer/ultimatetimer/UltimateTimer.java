@@ -42,6 +42,8 @@ public class UltimateTimer extends AppCompatActivity {
 
         this.checkFirstRun();
 
+        this.checkFirstRun();
+
         listPrograms = (ListView) this.findViewById(R.id.listPrograms);
         addProg = (FloatingActionButton) this.findViewById(R.id.fb_add_prog);
 
