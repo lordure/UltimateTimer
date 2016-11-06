@@ -90,7 +90,8 @@ public class ListProgAdapter extends BaseAdapter implements AdapterView.OnItemCl
     {
         //Lancement de l'activité Timer depuis la ligne sélectionnée
         Intent intent = new Intent(ListProgAdapter.this.context, TimerActivity.class);
-        intent.putExtra("program", ListProgAdapter.this.getItem(position));
+        Program wProg = (Program) ListProgAdapter.this.getItem(position);
+        intent.putExtra("program", wProg);
         context.startActivity(intent);
     }
 }

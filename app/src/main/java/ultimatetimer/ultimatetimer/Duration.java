@@ -52,6 +52,8 @@ public class Duration extends Timer implements Parcelable{
         dest.writeInt(this.mHours);
         dest.writeInt(this.mMinutes);
         dest.writeInt(this.mSeconds);
+        dest.writeString(this.mName);
+        dest.writeString(this.mDescription);
     }
 
     public static final Parcelable.Creator<Duration> CREATOR = new Parcelable.Creator<Duration>()
@@ -74,5 +76,7 @@ public class Duration extends Timer implements Parcelable{
         this.mHours = in.readInt();
         this.mMinutes = in.readInt();
         this.mSeconds = in.readInt();
+        this.mName = in.readString();
+        this.mDescription = in.readString();
     }
 }

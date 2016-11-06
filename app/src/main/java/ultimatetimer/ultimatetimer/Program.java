@@ -147,15 +147,15 @@ public class Program extends Timer implements Parcelable
         {
             //On commence par le type du Timer en cours de récupération
             Boolean Is_Program = false;
-            sharedPref.getBoolean(SP_Timer_Pre+String.valueOf(i)+ SP_Is_Program, Is_Program);
+            Is_Program = sharedPref.getBoolean(SP_Timer_Pre+String.valueOf(i)+ SP_Is_Program, false);
 
             if(Is_Program)
             {
                 //On récupère le nom et on appelle notre fonction de récupération par récursion
                 String Sub_Name = new String();
-                sharedPref.getString(SP_Timer_Pre + String.valueOf(i) + SP_SUFFIXE_Name, Sub_Name);
-                String Sub_Description = new String();
-                sharedPref.getString(SP_Timer_Pre + String.valueOf(i) + SP_SUFFIXE_Description, Sub_Description);
+                Sub_Name = sharedPref.getString(SP_Timer_Pre + String.valueOf(i) + SP_SUFFIXE_Name, null);
+                //String Sub_Description = new String();
+                //Sub_Description = sharedPref.getString(SP_Timer_Pre + String.valueOf(i) + SP_SUFFIXE_Description, null);
 
                 //On sait que les programs sont stockés sous un fichier dont le nom est formé à partir du nom
                 SharedPreferences subSharedPred = c.getSharedPreferences(UltimateTimer.SP_FILE_FORMAT+Sub_Name,Context.MODE_PRIVATE);
@@ -173,9 +173,9 @@ public class Program extends Timer implements Parcelable
             {
                 //Sinon on crée une duration que l'on ajoute à la listTimer
                 String Sub_Name = new String();
-                sharedPref.getString(SP_Timer_Pre + String.valueOf(i) + SP_SUFFIXE_Name, Sub_Name);
+                Sub_Name = sharedPref.getString(SP_Timer_Pre + String.valueOf(i) + SP_SUFFIXE_Name, null);
                 String Sub_Description = new String();
-                sharedPref.getString(SP_Timer_Pre + String.valueOf(i) + SP_SUFFIXE_Description, Sub_Description);
+                Sub_Description = sharedPref.getString(SP_Timer_Pre + String.valueOf(i) + SP_SUFFIXE_Description, null);
                 int hours = sharedPref.getInt(SP_Timer_Pre + String.valueOf(i) + SP_Duration_Hours, 0);
                 int minutes = sharedPref.getInt(SP_Timer_Pre + String.valueOf(i) + SP_Duration_Minutes, 0);
                 int seconds = sharedPref.getInt(SP_Timer_Pre + String.valueOf(i) + SP_Duration_Seconds, 0);
