@@ -76,7 +76,8 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
         wPauser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TimerActivity.this.mStoredMillisInFuture == 0) {
+                if (TimerActivity.this.mCountDown.getMillisUntilFinished() != 0 &&
+                        TimerActivity.this.mStoredMillisInFuture == 0) {
                     final TextView countdownClock = (TextView) TimerActivity.this.findViewById(R.id.countdownClock);
                     //En cas de pause, on stock les millis qui reste avant la fin
                     //Les millis sont déjà sauvées dans mStoredMillisInFuture
@@ -94,7 +95,8 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
         wStopper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TimerActivity.this.mCountDown != null) {
+                if (TimerActivity.this.mCountDown != null && TimerActivity.this.mCountDown.getMillisUntilFinished() != 0 &&
+                        TimerActivity.this.mStoredMillisInFuture == 0) {
                     final TextView countdownClock = (TextView) TimerActivity.this.findViewById(R.id.countdownClock);
 
                     TimerActivity.this.mCountDown.cancel();
@@ -183,6 +185,36 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
             TimerActivity.this.mTrainingCursor++;
             //Et on appelle setCOuntDownTimer ue nouvelle fois
             this.setCountDownTimer();
+        }
+    }
+
+    //When changing orientation Android calls onDestroy and then onCreate
+    //In order no to lose the current state we shall implement
+    //onSaveInstanceState and onRestoreInstanceState
+    @Override
+    public void onSaveInstanceState(Bundle aBundle)
+    {
+        aBundle.putInt("cursor",this.mTrainingCursor);
+        aBundle.putLong("millisinfuture",this.mCountDown.getMillisUntilFinished());
+        super.onSaveInstanceState(aBundle);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle aBundle)
+    {
+        super.onRestoreInstanceState(aBundle);
+        this.mTrainingCursor = aBundle.getInt("cursor");
+        this.mStoredMillisInFuture = aBundle.getLong("millisinfuture");
+
+        if( this.mTrainingCursor >= 0 && this.mStoredMillisInFuture != 0)
+        {
+            Duration duration = mCompleteTraining.get(this.mTrainingCursor);
+            //Une fois que l'on a affiché le programme en entier on affiche le chrono
+            //Classe : CountdownTimer
+            this.mCountDown = new ExtendedCountDownTimer(this.mStoredMillisInFuture , 100, this);
+            this.mStoredMillisInFuture = 0;
+
+            this.mCountDown.start();
         }
     }
 }

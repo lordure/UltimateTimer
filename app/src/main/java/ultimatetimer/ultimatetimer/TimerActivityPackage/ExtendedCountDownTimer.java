@@ -35,8 +35,10 @@ public class ExtendedCountDownTimer extends CountDownTimer {
 
     @Override
     public void onFinish() {
-        if( mListener != null)
+        if( mListener != null) {
+            this.mMillis = 0;
             mListener.onFinish();
+        }
     }
 
     public long getMillisUntilFinished()
