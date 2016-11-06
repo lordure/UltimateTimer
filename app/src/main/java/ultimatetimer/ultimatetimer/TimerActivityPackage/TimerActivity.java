@@ -168,8 +168,7 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
 
         final TextView countdownClock = (TextView) this.findViewById(R.id.countdownClock);
 
-        ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 100);
-        toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200);
+        ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
 
         //On set le compteur à 0
         countdownClock.setTextColor(Color.BLACK);
@@ -179,13 +178,17 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
             //Alors c'est fini bien fini
             //On réinitialise mTrainingCursor sans appeler setCountDownTimer pour ne pas relancer l'appli
             TimerActivity.this.mTrainingCursor = 0;
+            toneG.startTone(ToneGenerator.TONE_CDMA_HIGH_SSL,200);
         } else {
             //Sinon on relance la fonction avec la duration suivante
             //setCountDownTimer(i + 1);
             TimerActivity.this.mTrainingCursor++;
             //Et on appelle setCOuntDownTimer ue nouvelle fois
             this.setCountDownTimer();
+            toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD,200);
         }
+
+        toneG.release();
     }
 
     //When changing orientation Android calls onDestroy and then onCreate
