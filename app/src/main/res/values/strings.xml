@@ -41,4 +41,6 @@
     <string name="preparation">Preparation</string>
     <string name="emom">Every minute on the minute</string>
     <string name="prepareforworkout">Prepare for the workout</string>
+    <string name="khronos">Khronos Timer</string>
+    <string name="title_create_program">Create your own training</string>
 </resources>

@@ -38,6 +38,7 @@ public class UltimateTimer extends AppCompatActivity {
         setContentView(R.layout.activity_ultimate_timer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        this.setTitle(getString(R.string.khronos));
 
         this.checkFirstRun();
 

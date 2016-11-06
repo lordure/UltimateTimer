@@ -47,6 +47,7 @@ public class CreateProgram extends AppCompatActivity {
     protected void onCreate(Bundle aSavedInstance) {
         super.onCreate(aSavedInstance);
         this.setContentView(R.layout.content_form);
+        this.setTitle(this.getString(R.string.title_create_program));
 
         Toolbar wToolbar = (Toolbar) this.findViewById(R.id.toolbar);
         setSupportActionBar(wToolbar);
