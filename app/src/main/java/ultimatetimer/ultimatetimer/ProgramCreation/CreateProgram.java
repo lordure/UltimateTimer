@@ -78,8 +78,12 @@ public class CreateProgram extends AppCompatActivity {
                 }
                 else if (UltimateTimer.mUltimateNames.contains(wName))
                 {
-
                     Toast.makeText(CreateProgram.this, R.string.name_already_taken, Toast.LENGTH_LONG).show();
+                    return false;
+                }
+                else if(mListTraining.isEmpty())
+                {
+                    Toast.makeText(CreateProgram.this, R.string.list_cannot_be_empty, Toast.LENGTH_LONG).show();
                     return false;
                 }
                 else {

@@ -70,6 +70,6 @@
         android:textSize="80dp"
         android:gravity="center"
         android:layout_below="@+id/actions_layout"
-        android:text="00:00:00"/>
+        android:text="@string/trainingnone"/>
 
 </LinearLayout>

@@ -43,4 +43,5 @@
     <string name="prepareforworkout">Prepare toi!</string>
     <string name="khronos">Krhonos</string>
     <string name="title_create_program">crée ton propre entrainement</string>
+    <string name="list_cannot_be_empty">Renseigne au moins une durée/programme</string>
 </resources>
