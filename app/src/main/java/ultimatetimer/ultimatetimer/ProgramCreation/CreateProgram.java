@@ -34,7 +34,6 @@ import ultimatetimer.ultimatetimer.UltimateTimer;
  * On peut y ajouter d'autre programmes ou juste un interval.
  */
 public class CreateProgram extends AppCompatActivity {
-    static final ArrayList<Timer> mListTraining = new ArrayList<Timer>();
     ListFormAdapter mAdapter;
 
     public final static String SP_PREFIX = "Program_";
@@ -81,7 +80,7 @@ public class CreateProgram extends AppCompatActivity {
                     Toast.makeText(CreateProgram.this, R.string.name_already_taken, Toast.LENGTH_LONG).show();
                     return false;
                 }
-                else if(mListTraining.isEmpty())
+                else if(mAdapter.getList().isEmpty())
                 {
                     Toast.makeText(CreateProgram.this, R.string.list_cannot_be_empty, Toast.LENGTH_LONG).show();
                     return false;
