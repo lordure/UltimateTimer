@@ -67,6 +67,7 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
             public void onClick(View v) {
                 //Si mStoredMillisInFuture != 0 alors on est en pause
                 //Sinon on lance un timer
+                TimerActivity.this.mStoredMillisInFuture = 0;
                 setCountDownTimer();
             }
         });
@@ -76,8 +77,7 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
         wPauser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TimerActivity.this.mCountDown.getMillisUntilFinished() != 0 &&
-                        TimerActivity.this.mStoredMillisInFuture == 0) {
+                if (TimerActivity.this.mCountDown.getMillisUntilFinished() != 0) {
                     final TextView countdownClock = (TextView) TimerActivity.this.findViewById(R.id.countdownClock);
                     //En cas de pause, on stock les millis qui reste avant la fin
                     //Les millis sont déjà sauvées dans mStoredMillisInFuture
@@ -87,7 +87,7 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
                     countdownClock.setText(TimerActivity.this.mCountDown.getFormatedCountDown());
                     TimerActivity.this.mCountDown.cancel();
 
-                    Toast.makeText(TimerActivity.this, R.string.trainingpaused, Toast.LENGTH_LONG).show();
+                    Toast.makeText(TimerActivity.this, R.string.trainingpaused, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -95,15 +95,15 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
         wStopper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TimerActivity.this.mCountDown != null && TimerActivity.this.mCountDown.getMillisUntilFinished() != 0 &&
-                        TimerActivity.this.mStoredMillisInFuture == 0) {
+                if (TimerActivity.this.mCountDown != null && TimerActivity.this.mCountDown.getMillisUntilFinished() != 0 ) {
                     final TextView countdownClock = (TextView) TimerActivity.this.findViewById(R.id.countdownClock);
 
                     TimerActivity.this.mCountDown.cancel();
-                    countdownClock.setText(R.string.trainingnone);
+                    countdownClock.setText(getString(R.string.trainingnone));
 
-                    Toast.makeText(TimerActivity.this, R.string.trainingcancelled, Toast.LENGTH_LONG).show();
+                    Toast.makeText(TimerActivity.this, R.string.trainingcancelled, Toast.LENGTH_SHORT).show();
 
+                    countdownClock.setTextColor(Color.BLACK);
                     TimerActivity.this.mTrainingCursor = 0;
                     TimerActivity.this.mStoredMillisInFuture = 0;
                 }
@@ -159,6 +159,7 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
     public void onTick() {
         final TextView countdownClock = (TextView) this.findViewById(R.id.countdownClock);
         countdownClock.setTextColor(Color.BLACK);
+        this.mStoredMillisInFuture = this.mCountDown.getMillisUntilFinished();
         countdownClock.setText(this.mCountDown.getFormatedCountDown());
     }
 
@@ -198,7 +199,12 @@ public class TimerActivity extends AppCompatActivity implements CountDownListene
     public void onSaveInstanceState(Bundle aBundle)
     {
         aBundle.putInt("cursor",this.mTrainingCursor);
-        aBundle.putLong("millisinfuture",this.mCountDown.getMillisUntilFinished());
+        //2 cas, la timer est arrêté ou pas
+        if( this.mStoredMillisInFuture == 0)
+            aBundle.putLong("millisinfuture",0);
+        else
+            aBundle.putLong("millisinfuture",this.mCountDown.getMillisUntilFinished());
+
         super.onSaveInstanceState(aBundle);
     }
 
