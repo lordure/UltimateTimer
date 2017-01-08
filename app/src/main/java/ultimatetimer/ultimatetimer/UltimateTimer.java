@@ -3,14 +3,19 @@ package ultimatetimer.ultimatetimer;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -20,7 +25,7 @@ import java.util.Set;
 
 import ultimatetimer.ultimatetimer.ProgramCreation.CreateProgram;
 
-public class UltimateTimer extends AppCompatActivity {
+public class UltimateTimer extends AppCompatActivity{
 
     public static ArrayList<Timer> mUltimateList = new ArrayList<>();
     public static ArrayList<String> mUltimateNames = new ArrayList<>();
@@ -36,12 +41,12 @@ public class UltimateTimer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ultimate_timer);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setLogo(R.drawable.icone);
+        toolbar.setTitleTextColor(Color.WHITE);
         this.setTitle(getString(R.string.khronos));
-
-        this.checkFirstRun();
-
         this.checkFirstRun();
 
         listPrograms = (ListView) this.findViewById(R.id.listPrograms);
@@ -53,6 +58,13 @@ public class UltimateTimer extends AppCompatActivity {
         //On assigne l'adapter à notre list
         listPrograms.setAdapter(mAdapter);
         listPrograms.setOnItemClickListener(mAdapter);
+        listPrograms.setLongClickable(true);
+        listPrograms.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        listPrograms.setMultiChoiceModeListener(new ListViewLongClick(this, this.mAdapter));
+
+        //Gestion du long click sur la liste => changement de menu dans la toolbar
+        //When the user long clicks the event onCreateContextMenu is fired
+        this.registerForContextMenu(listPrograms);
 
         addProg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,8 +78,8 @@ public class UltimateTimer extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        this.loadSharedPrefs("Tabata");
-        this.loadSharedPrefs("EMOM");
+        //this.loadSharedPrefs("Tabata");
+        //this.loadSharedPrefs("EMOM");
 
         this.mAdapter.notifyDataSetChanged();
     }
@@ -75,7 +87,7 @@ public class UltimateTimer extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_ultimate_timer, menu);
+        getMenuInflater().inflate(R.menu.menu_ultimate_timer, menu);
         return true;
     }
 
@@ -95,8 +107,7 @@ public class UltimateTimer extends AppCompatActivity {
 
     private void getUltimateList() {
         //Si la liste n'est pas vide alors on la clear
-        if(!mUltimateList.isEmpty())
-        {
+        if (!mUltimateList.isEmpty()) {
             mUltimateList.clear();
             mUltimateNames.clear();
         }
@@ -105,25 +116,26 @@ public class UltimateTimer extends AppCompatActivity {
         SharedPreferences wUltimateSharedPref = getSharedPreferences(SP_FILE_FORMAT + SP_APP_NAME, Context.MODE_APPEND);
         int wSize = wUltimateSharedPref.getInt(CreateProgram.SP_SIZE, 0);
 
-        for(int i = 0; i < wSize; i ++)
-        {
-            mUltimateNames.add(wUltimateSharedPref.getString(CreateProgram.SP_PREFIX+i,null));
+        for (int i = 0; i < wSize; i++) {
+            mUltimateNames.add(wUltimateSharedPref.getString(CreateProgram.SP_PREFIX + i, null));
             //Et on ouvre le SP correspondant
-            SharedPreferences wProgramSP = getSharedPreferences(mUltimateNames.get(i),Context.MODE_APPEND);
-            Timer wTimer = Program.GetProgramFromSharedPreferences(wProgramSP,this);
-            if( wTimer != null)
+            SharedPreferences wProgramSP = getSharedPreferences(mUltimateNames.get(i), Context.MODE_APPEND);
+            Timer wTimer = Program.GetProgramFromSharedPreferences(wProgramSP, this);
+            if (wTimer != null)
                 mUltimateList.add(wTimer);
         }
         Log.i("UltimateTimerActivity", "UltimateList done");
         mAdapter.notifyDataSetChanged();
     }
 
-    public void UpdateTrainingList() {
+    /*public void UpdateTrainingList() {
         this.mAdapter.notifyDataSetChanged();
-        mUltimateNames.add(mUltimateList.get(mUltimateList.size()-1).getName());
-    }
+        mUltimateNames.add(mUltimateList.get(mUltimateList.size() - 1).getName());
+    }*/
 
-    public void loadSharedPrefs(String ... prefs) {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void loadSharedPrefs(String... prefs) {
 
         // Define default return values. These should not display, but are needed
         final String STRING_ERROR = "error!";
@@ -138,7 +150,7 @@ public class UltimateTimer extends AppCompatActivity {
         Log.i("Loading Shared Prefs", "-----------------------------------");
         Log.i("------------------", "-------------------------------------");
 
-        for (String pref_name: prefs) {
+        for (String pref_name : prefs) {
 
             SharedPreferences preference = getSharedPreferences(pref_name, MODE_PRIVATE);
             Map<String, ?> prefMap = preference.getAll();
@@ -190,13 +202,10 @@ public class UltimateTimer extends AppCompatActivity {
         int savedVersionCode = prefs.getInt(SP_VERSION_CODE, DOESNT_EXIST);
 
         // Check for first run or upgrade
-        if (currentVersionCode == savedVersionCode)
-        {
+        if (currentVersionCode == savedVersionCode) {
             // This is just a normal run
             return;
-        }
-        else if (savedVersionCode == DOESNT_EXIST)
-        {
+        } else if (savedVersionCode == DOESNT_EXIST) {
             //Dans le cadre d'une nouvelle install on pre-enregistre certains programmes, les classqiques ^^
             Program wTabata = getTabata();
             UltimateTimer.mUltimateNames.add("Tabata");
@@ -229,13 +238,12 @@ public class UltimateTimer extends AppCompatActivity {
 
     }
 
-    private final Program getTabata()
-    {
+    private final Program getTabata() {
         //TABATA
-        Duration w20 = new Duration(getString(R.string.exercice),getString(R.string.whatever),0,0,20);
-        Duration w10 = new Duration(getString(R.string.rest),null, 0,0,10);
+        Duration w20 = new Duration(getString(R.string.exercice), getString(R.string.whatever), 0, 0, 20);
+        Duration w10 = new Duration(getString(R.string.rest), null, 0, 0, 10);
         ArrayList<Timer> wTabataList = new ArrayList<Timer>();
-        wTabataList.add(new Duration(getString(R.string.preparation),getString(R.string.prepareforworkout), 0,0,15));
+        wTabataList.add(new Duration(getString(R.string.preparation), getString(R.string.prepareforworkout), 0, 0, 15));
         wTabataList.add(w20);
         wTabataList.add(w10);
         wTabataList.add(w20);
@@ -244,41 +252,39 @@ public class UltimateTimer extends AppCompatActivity {
         wTabataList.add(w10);
         wTabataList.add(w20);
         wTabataList.add(w10);
-        Program wTabata = new Program("Tabata","HIIT", wTabataList);
+        Program wTabata = new Program("Tabata", "HIIT", wTabataList);
 
         return wTabata;
     }
 
-    private final Program BeteVosges()
-    {
+    private final Program BeteVosges() {
         return null;
     }
 
-    private final Program getEMOM()
-    {
+    private final Program getEMOM() {
         ArrayList<Timer> wList = new ArrayList<>();
-        wList.add(new Duration(getString(R.string.preparation),null, 0,0,15));
-        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
-        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
-        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
-        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
-        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
-        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
-        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
-        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
-        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
-        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
-        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
-        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
-        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
-        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
-        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
-        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
-        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
-        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
-        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
-        wList.add(new Duration(getString(R.string.exercice),null, 0,1,0));
-        Program wEMOM = new Program("EMOM",getString(R.string.emom),wList );
+        wList.add(new Duration(getString(R.string.preparation), null, 0, 0, 15));
+        wList.add(new Duration(getString(R.string.exercice), null, 0, 1, 0));
+        wList.add(new Duration(getString(R.string.exercice), null, 0, 1, 0));
+        wList.add(new Duration(getString(R.string.exercice), null, 0, 1, 0));
+        wList.add(new Duration(getString(R.string.exercice), null, 0, 1, 0));
+        wList.add(new Duration(getString(R.string.exercice), null, 0, 1, 0));
+        wList.add(new Duration(getString(R.string.exercice), null, 0, 1, 0));
+        wList.add(new Duration(getString(R.string.exercice), null, 0, 1, 0));
+        wList.add(new Duration(getString(R.string.exercice), null, 0, 1, 0));
+        wList.add(new Duration(getString(R.string.exercice), null, 0, 1, 0));
+        wList.add(new Duration(getString(R.string.exercice), null, 0, 1, 0));
+        wList.add(new Duration(getString(R.string.exercice), null, 0, 1, 0));
+        wList.add(new Duration(getString(R.string.exercice), null, 0, 1, 0));
+        wList.add(new Duration(getString(R.string.exercice), null, 0, 1, 0));
+        wList.add(new Duration(getString(R.string.exercice), null, 0, 1, 0));
+        wList.add(new Duration(getString(R.string.exercice), null, 0, 1, 0));
+        wList.add(new Duration(getString(R.string.exercice), null, 0, 1, 0));
+        wList.add(new Duration(getString(R.string.exercice), null, 0, 1, 0));
+        wList.add(new Duration(getString(R.string.exercice), null, 0, 1, 0));
+        wList.add(new Duration(getString(R.string.exercice), null, 0, 1, 0));
+        wList.add(new Duration(getString(R.string.exercice), null, 0, 1, 0));
+        Program wEMOM = new Program("EMOM", getString(R.string.emom), wList);
 
         return wEMOM;
     }

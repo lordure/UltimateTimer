@@ -18,7 +18,7 @@ import ultimatetimer.ultimatetimer.TimerActivityPackage.TimerActivity;
 /**
  * Created by pierre on 08/05/2016.
  */
-public class ListProgAdapter extends BaseAdapter implements AdapterView.OnItemClickListener {
+public class ListProgAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
     Context context;
     ArrayList<Timer> myList = new ArrayList<Timer>();
 
@@ -76,6 +76,17 @@ public class ListProgAdapter extends BaseAdapter implements AdapterView.OnItemCl
         }
 
         return convertView;
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        //The long click listener changes the action tool bar menu and proposes 3 options:
+        //  - Edit (send the program to the program creation activity)
+        //  - Delete²
+        //  - Send by Sms (TODO)
+
+        return true;
+
     }
 
     //La classe IntervalView permet de ne pas devoir rechercher les vues

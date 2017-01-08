@@ -34,7 +34,7 @@ import ultimatetimer.ultimatetimer.UltimateTimer;
  * On peut y ajouter d'autre programmes ou juste un interval.
  */
 public class CreateProgram extends AppCompatActivity {
-    static final ArrayList<Timer> mListTraining = new ArrayList<Timer>();
+    //static final ArrayList<Timer> mListTraining = new ArrayList<Timer>();
     ListFormAdapter mAdapter;
 
     public final static String SP_PREFIX = "Program_";
